@@ -25,7 +25,7 @@ export default function Page({ params: {
         try {
             const token = localStorage.getItem("token")
             if (!token) {
-                toast("Kindly connect your wallet and signin.")
+                toast("Kindly connect to your solana devnet wallet account to sign in")
             } else {
                 setLoading(true)
                 const response = await axios.get(`${NEXT_BACKEND_URL}/v1/user/task?taskId=${taskId}`, {
