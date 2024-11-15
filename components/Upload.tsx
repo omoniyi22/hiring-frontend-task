@@ -132,7 +132,7 @@ export const Upload = () => {
                 setTxSignature(signature);
                 const delay = async (ms: number) => {
                     const timeoutId = setTimeout(() => {
-                        toast("Hey! Payment Successful. You can submit your task.")
+                        toast("Hey! Payment Successful. You can submit your task now.")
                         setIsLoading(false)
                     }, ms);
 
