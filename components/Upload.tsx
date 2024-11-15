@@ -3,7 +3,7 @@ import axios from "axios";
 // import { useRouter } from "next/compat/router";
 import { PublicKey, SystemProgram, Transaction } from "@solana/web3.js";
 import { useRouter } from "next/navigation";
-import { BACKEND_URL, myPublicKey } from "@/utils";
+import { NEXT_BACKEND_URL, NEXT_BACKEND_PUBLIC_KEY } from "@/app/utils";
 import { AppContext } from "next/app";
 import Loader from "./Loader/Loader";
 import { useWallet, useConnection } from "@solana/wallet-adapter-react";
@@ -35,7 +35,7 @@ export const Upload = () => {
                     data.append("file", file);
                     // let oldImages = [...images]
                     uploadImagesQueue.push(
-                        axios.post(`${BACKEND_URL}/v1/user/img_upload`, data).then(res => {
+                        axios.post(`${NEXT_BACKEND_URL}/v1/user/img_upload`, data).then(res => {
                             let res_data_links = res.data.links
                             setImages(oldImages => ([...oldImages, ...res_data_links]))
                         })
@@ -71,7 +71,7 @@ export const Upload = () => {
                     setIsLoading(true)
                     if (txSignature) {
                         let response = await axios.post(
-                            `${BACKEND_URL}/v1/user/task`,
+                            `${NEXT_BACKEND_URL}/v1/user/task`,
                             {
                                 options: images.map((image) => ({
                                     imageUrl: image
@@ -114,7 +114,7 @@ export const Upload = () => {
                 toast("Add more than one image")
             } else {
                 setIsLoading(true)
-                const Public_Key = new PublicKey(myPublicKey);
+                const Public_Key = new PublicKey(NEXT_BACKEND_PUBLIC_KEY);
                 const lamports = 0.1 * 1_000_000_000;
 
                 // Create a transaction to transfer SOL

@@ -6,7 +6,7 @@ import {
 import { useWallet } from "@solana/wallet-adapter-react"
 import { useEffect } from 'react';
 import axios from 'axios';
-import { BACKEND_URL } from '@/utils';
+import { NEXT_BACKEND_URL } from '@/app/utils';
 import Link from 'next/link';
 import { toast } from 'react-toastify';
 
@@ -26,7 +26,7 @@ export const AppBar = () => {
 
                 console.log({ signature, publicKey })
 
-                const response = await axios.post(`${BACKEND_URL}/v1/user/signin`, {
+                const response = await axios.post(`${NEXT_BACKEND_URL}/v1/user/signin`, {
                     signature,
                     publicKey: publicKey?.toString()
                 })

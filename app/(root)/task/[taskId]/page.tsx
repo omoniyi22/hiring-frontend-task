@@ -1,7 +1,7 @@
 "use client"
 
 import { AppBar } from "@/components/AppBar";
-import { BACKEND_URL } from "@/utils";
+import { NEXT_BACKEND_URL } from "@/app/utils";
 import axios from "axios"
 import Loader from "./../../../../components/Loader/Loader";
 import { useEffect, useState } from "react"
@@ -28,7 +28,7 @@ export default function Page({ params: {
                 toast("Kindly connect your wallet and signin.")
             } else {
                 setLoading(true)
-                const response = await axios.get(`${BACKEND_URL}/v1/user/task?taskId=${taskId}`, {
+                const response = await axios.get(`${NEXT_BACKEND_URL}/v1/user/task?taskId=${taskId}`, {
                     headers: {
                         "Authorization": localStorage.getItem("token")
                     }
@@ -37,7 +37,7 @@ export default function Page({ params: {
                 setTaskDetails(response.data.taskDetails)
             }
         } catch (error) {
-            
+
             toast("An error occured, Please try again.")
         } finally {
             setLoading(false)
@@ -75,9 +75,11 @@ export default function Page({ params: {
                 </div>
             }
             <section className="container  py-8 -mt-10 -mb-10">
-                <div className="flex flex-wrap gap-3 max-w-fit p-6 rounded-sm justify-center mx-auto">
-                    {Object.keys(result || {}).map(taskId =>
-                        <Task imageUrl={result[taskId].option.imageUrl} votes={result[taskId].count} />
+                <div className="flex flex-wrap gap-8 max-w-fit p-6 rounded-sm justify-center mx-auto">
+                    {Object.keys(result || {}).map((taskId, index) =>
+
+                        <Task key={index} imageUrl={result[taskId].option.imageUrl} votes={result[taskId].count} />
+
                     )}
                 </div>
             </section>
@@ -85,11 +87,11 @@ export default function Page({ params: {
     )
 }
 
-function Task({ imageUrl, votes }: { imageUrl: string; votes: number }) {
+function Task({ key, imageUrl, votes }: { key: number; imageUrl: string; votes: number }) {
     return (
         <>
-            <div className="relative group  pb-0 bg-gray-700 border-gray-700 border max-w-fit  overflow-hidden rounded-lg">
-                <img src={imageUrl} className="object-cover h-32 w-44 rounded-md p-1 border my-5 mx-auto mx-8 " />
+            <div key={key} className="relative group  pb-0 bg-gray-700 border-gray-700 border max-w-fit  overflow-hidden rounded-lg">
+                <img src={imageUrl} className="object-cover h-32 w-44 rounded-md p-1 border my-5  mx-6" />
                 <div className="flex justify-center mt-3 border-t white bg-white py-1">
                     votes:  {votes}
                 </div>
